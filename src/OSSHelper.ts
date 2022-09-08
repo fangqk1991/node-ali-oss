@@ -3,9 +3,9 @@ import { RemoteFile } from './RemoteFile'
 import { ReceivedFile } from './ReceivedFile'
 import * as assert from 'assert'
 import { AliOSSOptions } from './OSSTypes'
+import { makeUUID } from '@fangcha/tools'
 
 const md5File = require('md5-file')
-const uuid = require('uuid/v4')
 const crypto = require('crypto')
 
 class OSSHelper {
@@ -15,7 +15,7 @@ class OSSHelper {
   private _localSpacePath: string
   private _signOptions?: {}
 
-  public constructor () {
+  public constructor() {
     this._remoteRootDir = ''
     this._localSpacePath = ''
   }
@@ -38,7 +38,7 @@ class OSSHelper {
     return this._downloadClient as AliyunOSS
   }
 
-  public async autoUpload(localPath: string, extension: string = '') {
+  public async autoUpload(localPath: string, extension = '') {
     if (!extension) {
       extension = localPath.split('.').pop() as string
       if (extension === localPath || /[^a-zA-Z0-9]/.test(extension)) {
@@ -52,7 +52,7 @@ class OSSHelper {
   }
 
   public async autoDownload(remotePath: string) {
-    const localPath = `${this._localSpacePath}/${uuid()}`
+    const localPath = `${this._localSpacePath}/${makeUUID()}`
     const client = this._downloadClient as AliyunOSS
     await client.download(remotePath, localPath)
     const file = ReceivedFile.fileForSpace(this._localSpacePath)
@@ -87,11 +87,15 @@ class OSSHelper {
       ['eq', '$key', remotePath],
     ]
     const policy = JSON.stringify({
-      'expiration': expire,
-      'conditions': conditions,
+      expiration: expire,
+      conditions: conditions,
     })
     const policyBase64 = Buffer.from(policy).toString('base64')
-    const signature = crypto.createHmac('sha1', signOptions['accessKeySecret']).update(policyBase64).digest().toString('base64')
+    const signature = crypto
+      .createHmac('sha1', signOptions['accessKeySecret'])
+      .update(policyBase64)
+      .digest()
+      .toString('base64')
 
     return {
       url: signOptions['bucketURL'],

@@ -2,6 +2,7 @@ import * as OSS from 'ali-oss'
 import * as fs from 'fs'
 import * as shell from 'shelljs'
 import { AliOSSOptions } from './OSSTypes'
+import { GuardPerformer } from '@fangcha/tools'
 
 export class AliyunOSS {
   private _options: AliOSSOptions
@@ -13,8 +14,10 @@ export class AliyunOSS {
   }
 
   public async uploadFile(localPath: string, remotePath: string) {
-    const response = await this._client.put(remotePath, localPath)
-    return response.name as string
+    return await GuardPerformer.perform(async () => {
+      const response = await this._client.put(remotePath, localPath)
+      return response.name as string
+    })
   }
 
   public async download(remotePath: string, localPath: string) {

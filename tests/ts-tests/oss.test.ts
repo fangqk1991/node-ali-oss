@@ -1,12 +1,12 @@
-import { OSSHelper, RemoteFile, AliyunOSS, ReceivedFile, OSSUtils } from '../../src'
+import { AliyunOSS, OSSHelper, OSSUtils, ReceivedFile, RemoteFile } from '../../src'
 
 import * as fs from 'fs'
 import * as assert from 'assert'
 import { axiosGET, axiosPOST } from '@fangcha/app-request'
+import { makeUUID } from '@fangcha/tools'
 
 const config = require('../config')
 const md5File = require('md5-file')
-const uuid = require('uuid')
 
 const remoteRootDir = 'uploads'
 const downloadRootDir = `${__dirname}/../run.local/downloads`
@@ -52,7 +52,7 @@ describe('File', () => {
 describe('Test OSS', () => {
   it(`Test AliyunOSS`, async () => {
     const objKey = await generateRemoteObject()
-    const localPath = `${__dirname}/../run.local/${uuid()}`
+    const localPath = `${__dirname}/../run.local/${makeUUID()}`
     const visitClient = new AliyunOSS(config.aliyunOSS.visitor)
     const filePath2 = await visitClient.download(objKey, localPath)
     assert.ok(localPath === filePath2)
@@ -81,7 +81,7 @@ describe('Test OSS', () => {
     const objKey = await OSSHelper.autoUpload(filePath)
     const filePath2 = await OSSHelper.autoDownload(objKey)
     assert.ok(rawContent === fs.readFileSync(filePath2, 'utf8'))
-    assert.ok(rawContent === await OSSHelper.getContent(objKey))
+    assert.ok(rawContent === (await OSSHelper.getContent(objKey)))
 
     const url = OSSHelper.signatureURL(objKey)
     const request = axiosGET(url)
@@ -111,7 +111,7 @@ describe('Test OSS', () => {
     const request = axiosPOST(metadata.url)
     request.setFormData(params)
     await request.quickSend()
-    assert.ok(await OSSHelper.getContent(file.remotePath()) === fs.readFileSync(filePath, 'utf8'))
+    assert.ok((await OSSHelper.getContent(file.remotePath())) === fs.readFileSync(filePath, 'utf8'))
   })
 
   it(`Test OSSUtils`, async () => {
@@ -125,7 +125,7 @@ describe('Test OSS', () => {
     const objKey = await ossUtils.autoUpload(filePath)
     const filePath2 = await ossUtils.autoDownload(objKey)
     assert.ok(rawContent === fs.readFileSync(filePath2, 'utf8'))
-    assert.ok(rawContent === await ossUtils.getContent(objKey))
+    assert.ok(rawContent === (await ossUtils.getContent(objKey)))
 
     const url = ossUtils.signatureURL(objKey)
     const request = axiosGET(url)
@@ -156,6 +156,6 @@ describe('Test OSS', () => {
     const request = axiosPOST(metadata.url)
     request.setFormData(params)
     await request.quickSend()
-    assert.ok(await ossUtils.getContent(file.remotePath()) === fs.readFileSync(filePath, 'utf8'))
+    assert.ok((await ossUtils.getContent(file.remotePath())) === fs.readFileSync(filePath, 'utf8'))
   })
 })

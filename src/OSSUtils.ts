@@ -4,9 +4,9 @@ import { ReceivedFile } from './ReceivedFile'
 import * as assert from 'assert'
 import * as OSS from 'ali-oss'
 import { AliOSSOptions, AliUploadMetadata, UploadSignatureOptions } from './OSSTypes'
+import { makeUUID } from '@fangcha/tools'
 
 const md5File = require('md5-file')
-const uuid = require('uuid/v4')
 const crypto = require('crypto')
 
 export class OSSUtils {
@@ -39,7 +39,7 @@ export class OSSUtils {
     return this._downloadClient as AliyunOSS
   }
 
-  public async autoUpload(localPath: string, extension: string = '') {
+  public async autoUpload(localPath: string, extension = '') {
     if (!extension) {
       extension = localPath.split('.').pop() as string
       if (extension === localPath || /[^a-zA-Z0-9]/.test(extension)) {
@@ -53,7 +53,7 @@ export class OSSUtils {
   }
 
   public async autoDownload(remotePath: string) {
-    const localPath = `${this._localSpacePath}/${uuid()}`
+    const localPath = `${this._localSpacePath}/${makeUUID()}`
     const client = this._downloadClient as AliyunOSS
     await client.download(remotePath, localPath)
     const file = ReceivedFile.fileForSpace(this._localSpacePath)
