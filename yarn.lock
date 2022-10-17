@@ -447,15 +447,14 @@ ajv@^6.10.0, ajv@^6.10.2:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
-ali-oss@^6.12.0:
-  version "6.15.2"
-  resolved "https://registry.yarnpkg.com/ali-oss/-/ali-oss-6.15.2.tgz#276c3bdff5f89460ac9feac8d1d2a0bc32a18d6c"
-  integrity sha512-sLB3a2Q6BvD4fNfHO4a0uuVn+5dlFaWUE/tExFk8bNMTevNGb4hH419kyvTSvKsO8FGLIhyezdi2NVhLHwhPqA==
+ali-oss@^6.17.1:
+  version "6.17.1"
+  resolved "https://registry.yarnpkg.com/ali-oss/-/ali-oss-6.17.1.tgz#3e88738ec01111a26a2b967cf857d97050886156"
+  integrity sha512-v2oT3UhSJTH/LrsscVvi7iEGrnundydNaFzpYAKatqOl4JNcBV4UiwtlJU+ZHLys040JH2k+CutznA0GoE+P2w==
   dependencies:
     address "^1.0.0"
     agentkeepalive "^3.4.1"
     bowser "^1.6.0"
-    co-defer "^1.0.0"
     copy-to "^2.0.1"
     dateformat "^2.0.0"
     debug "^2.2.0"
@@ -465,7 +464,7 @@ ali-oss@^6.12.0:
     humanize-ms "^1.2.0"
     is-type-of "^1.0.0"
     js-base64 "^2.5.2"
-    jstoxml "^0.2.3"
+    jstoxml "^2.0.0"
     merge-descriptors "^1.0.1"
     mime "^2.4.5"
     mz-modules "^2.1.0"
@@ -812,11 +811,6 @@ cliui@^7.0.2:
     string-width "^4.2.0"
     strip-ansi "^6.0.0"
     wrap-ansi "^7.0.0"
-
-co-defer@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/co-defer/-/co-defer-1.0.0.tgz#3e4a787a8eed6b0a21ee287c094f7e8de0d3c818"
-  integrity sha1-Pkp4eo7tawoh7ih8CU9+jeDTyBg=
 
 color-convert@^1.9.0:
   version "1.9.3"
@@ -2263,10 +2257,10 @@ jsonfile@^4.0.0:
   optionalDependencies:
     graceful-fs "^4.1.6"
 
-jstoxml@^0.2.3:
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/jstoxml/-/jstoxml-0.2.4.tgz#ff3fb67856883a032953c7ce8ce7486210f48447"
-  integrity sha1-/z+2eFaIOgMpU8fOjOdIYhD0hEc=
+jstoxml@^2.0.0:
+  version "2.2.9"
+  resolved "https://registry.yarnpkg.com/jstoxml/-/jstoxml-2.2.9.tgz#2eebd5e55383fe66a375022ca0aa88f77bc4fb84"
+  integrity sha512-OYWlK0j+roh+eyaMROlNbS5cd5R25Y+IUpdl7cNdB8HNrkgwQzIS7L9MegxOiWNBj9dQhA/yAxiMwCC5mwNoBw==
 
 "jsx-ast-utils@^2.4.1 || ^3.0.0":
   version "3.3.3"
